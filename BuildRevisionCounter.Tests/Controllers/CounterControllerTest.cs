@@ -15,17 +15,10 @@ namespace BuildRevisionCounter.Tests.Controllers
         [TestFixtureSetUp]
         public void SetUp()
         {
-            SetUpAsync().Wait();
-        }
-
-        private async Task SetUpAsync()
-        {
             UserRepository userRepo = RepositoriesFactory.UserRepoInstance;
             RevisionRepository revisionRepo = RepositoriesFactory.RevisionRepoInstance;
 
-            await revisionRepo.DropDatabaseAsync();
-            await userRepo.CreateOneIndexAsync();
-            await userRepo.EnsureAdminUser();
+            MongoDBStorageUtils.SetUpAsync(revisionRepo, userRepo).Wait();
 
             _controller = new CounterController(revisionRepo);
         }
@@ -45,10 +38,10 @@ namespace BuildRevisionCounter.Tests.Controllers
         }
 
         [Test]
-        public async Task BumpingNewRevisionReturnsOne()
+        public async Task BumpingNewRevisionReturnsZero()
         {
             var rev = await _controller.Bumping("BumpingNewRevisionReturnsZero");
-            Assert.AreEqual(1, rev);
+            Assert.AreEqual(0, rev);
         }
 
         [Test]

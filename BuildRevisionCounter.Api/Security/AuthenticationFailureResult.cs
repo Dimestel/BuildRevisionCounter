@@ -6,30 +6,30 @@ using System.Web.Http;
 
 namespace BuildRevisionCounter.Api.Security
 {
-	public class AuthenticationFailureResult : IHttpActionResult
-	{
-		public AuthenticationFailureResult(string reasonPhrase, HttpRequestMessage request)
-		{
-			ReasonPhrase = reasonPhrase;
-			Request = request;
-		}
+    public class AuthenticationFailureResult : IHttpActionResult
+    {
+        public AuthenticationFailureResult(string reasonPhrase, HttpRequestMessage request)
+        {
+            ReasonPhrase = reasonPhrase;
+            Request = request;
+        }
 
-		public string ReasonPhrase { get; private set; }
+        public string ReasonPhrase { get; private set; }
 
-		public HttpRequestMessage Request { get; private set; }
+        public HttpRequestMessage Request { get; private set; }
 
-		public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-		{
-			return Task.FromResult(Execute());
-		}
+        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        {
+            return Task.FromResult(Execute());
+        }
 
-		private HttpResponseMessage Execute()
-		{
-			return new HttpResponseMessage(HttpStatusCode.Unauthorized)
-			{
-				RequestMessage = Request,
-				ReasonPhrase = ReasonPhrase
-			};
-		}
-	}
+        private HttpResponseMessage Execute()
+        {
+            return new HttpResponseMessage(HttpStatusCode.Unauthorized)
+            {
+                RequestMessage = Request,
+                ReasonPhrase = ReasonPhrase
+            };
+        }
+    }
 }

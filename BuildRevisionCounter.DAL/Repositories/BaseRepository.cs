@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BuildRevisionCounter.DAL.Repositories.Interfaces;
@@ -16,13 +17,19 @@ namespace BuildRevisionCounter.DAL.Repositories
         protected IMongoCollection<T> DbContext { get; private set; }
 
         /// <summary>
-        /// Получает коллекцию сущностей из репозитория по предикату
+        /// Получает постраничный список сущностей
         /// </summary>
         /// <param name="predicate">Предикат поиска</param>
+        /// <param name="pageSize">Количество элементов на странице</param>
+        /// <param name="pageNumber">Номер страницы</param>
         /// <returns></returns>
-        public IFindFluent<T, T> GetAll(Expression<Func<T, bool>> predicate)
+        public async Task<List<T>> GetAllByPage(Expression<Func<T, bool>> predicate, int pageSize, int pageNumber)
         {
-            return DbContext.Find(predicate);
+            return await DbContext
+                .Find(r => true)
+                .Skip(pageSize * (pageNumber - 1))
+                .Limit(pageSize)
+                .ToListAsync();
         }
 
         /// <summary>

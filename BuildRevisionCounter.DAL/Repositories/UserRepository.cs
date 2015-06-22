@@ -9,7 +9,7 @@ namespace BuildRevisionCounter.DAL.Repositories
     {
         public static readonly string AdminName = "admin";
         public static readonly string AdminPassword = "admin";
-        private static readonly string[] AdminRoles = { Enums.AdminRoles.Admin.ToString().ToLower(), Enums.AdminRoles.Buildserver.ToString().ToLower(), Enums.AdminRoles.Editor.ToString().ToLower() };
+        private static readonly string[] AdminRoles = { Enums.AdminRoles.Admin.ToLower(), Enums.AdminRoles.Buildserver.ToLower(), Enums.AdminRoles.Editor.ToLower() };
 
         public UserRepository() :
             base("users") { }
@@ -25,11 +25,11 @@ namespace BuildRevisionCounter.DAL.Repositories
                     });
         }
 
-        public async Task CreateOneIndexAsync()
+        public async Task EnsureUsersIndex()
         {
             await DbContext.Indexes.CreateOneAsync(
                 Builders<UserModel>.IndexKeys.Ascending(u => u.Name),
-                new CreateIndexOptions { Unique = true });
+                new CreateIndexOptions { Unique = true, });
         }
 
         public async Task EnsureAdminUser()

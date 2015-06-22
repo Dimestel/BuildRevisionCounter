@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Driver;
@@ -24,6 +25,15 @@ namespace BuildRevisionCounter.DAL.Repositories.Interfaces
         /// <param name="predicate">Предикат поиска</param>
         /// <returns></returns>
         Task<T> Get(FilterDefinition<T> predicate);
+
+        /// <summary>
+        /// Получает постраничный список сущностей
+        /// </summary>
+        /// <param name="predicate">Предикат поиска</param>
+        /// <param name="pageSize">Количество элементов на странице</param>
+        /// <param name="pageNumber">Номер страницы</param>
+        /// <returns></returns>
+        Task<List<T>> GetAllByPage(Expression<Func<T, bool>> predicate, int pageSize, int pageNumber);
 
         /// <summary>
         /// Добавляет новую сущность в репозиторий

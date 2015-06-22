@@ -22,9 +22,7 @@ namespace BuildRevisionCounter.Tests
             _userRepo = RepositoriesFactory.UserRepoInstance;
             _revisionRepo = RepositoriesFactory.RevisionRepoInstance;
 
-            await _revisionRepo.DropDatabaseAsync();
-            await _userRepo.CreateOneIndexAsync();
-            await _userRepo.EnsureAdminUser();
+            MongoDBStorageUtils.SetUpAsync(_revisionRepo, _userRepo).Wait();
         }
 
 		[Test]

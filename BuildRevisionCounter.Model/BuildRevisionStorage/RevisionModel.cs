@@ -14,8 +14,8 @@ namespace BuildRevisionCounter.Model.BuildRevisionStorage
 		[BsonElement("updated"), BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
 		public DateTime Updated;
 
-		[BsonElement("nextNumber")]
-		public long NextNumber;
+		[BsonElement("currentNumber")]
+		public long CurrentNumber;
 
 	}
 }
