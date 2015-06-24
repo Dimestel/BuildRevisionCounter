@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace BuildRevisionCounter.Model
+namespace BuildRevisionCounter.Model.BuildRevisionStorage
 {
 	public class UserModel
 	{
